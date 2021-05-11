@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--同一namespace下不可有相同的id-->
+<mapper namespace="com.evenliu.reply.dao.MessageDao">
+    <resultMap id="MessageResult" type="com.evenliu.reply.bean.Message">
+        <id column="ID" property="id" jdbcType="INTEGER"></id>
+        <result column="COMMAND" property="command" jdbcType="VARCHAR"></result>
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"></result>
+        <result column="CONTENT" property="content" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+
+    <select id="queryAllMessage" parameterType="com.evenliu.reply.bean.Message" resultMap="MessageResult">
+        select ID,COMMAND,DESCRIPTION,CONTENT from message
+        <where>
+            <if test="command!=null and !&quot;&quot;.equals(command.trim())">
+                and COMMAND=#{command}
+            </if>
+            <if test="description!=null and !&quot;&quot;.equals(description.trim())">
+                and DESCRIPTION like '%' #{description} '%'
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteMessageById" parameterType="int">
+        delete from message where ID=#{_paramter}
+    </delete>
+
+    <delete id="deleteMessages" parameterType="java.util.List">
+        delete from message where ID in(
+          <foreach collection="list" item="item" separator=",">
+              #{item}
+          </foreach>
+        )
+    </delete>
+</mapper>

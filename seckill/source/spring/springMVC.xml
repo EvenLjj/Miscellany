@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:context="http://www.springframework.org/schema/context"    
+    xmlns:mvc="http://www.springframework.org/schema/mvc"   
+    xmlns:task="http://www.springframework.org/schema/task" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd   
+    http://www.springframework.org/schema/tx   
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd  
+    http://www.springframework.org/schema/mvc  
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+    http://www.springframework.org/schema/task 
+    http://www.springframework.org/schema/task/spring-task-3.2.xsd">  
+    
+    <!-- task任务扫描注解 -->
+    <task:annotation-driven/>
+    
+    <!-- 默认首页 -->
+	<!-- <mvc:view-controller path="/" view-name="redirect:/login/login" /> -->
+    
+    <!-- 在另外一个文件中开启了 -->
+	<context:component-scan  base-package="com.evenliu.*"></context:component-scan>
+    
+    
+    <!-- 1.k开启SpringMVC的注解映射的模式 -->
+    <!-- 简化配置：
+    	(1)自动注册DefaultAnnotationMapping，AnnotationMethodHandlerAdapter
+    	(2)提供一系列功能：数据绑定，数字和日期format@NumberFormat，@DataTimeFormat，xml，json的默认支持
+     -->  
+    <mvc:annotation-driven />  
+      
+    <!-- 2：视图解释类 -->  
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix" value="/WEB-INF/jsp/"/>  
+        <property name="suffix" value=".jsp"/><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->  
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />  
+    </bean>  
+    
+    <bean id="multipartResolver"       
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+          <property name="defaultEncoding" value="UTF-8"></property>
+     </bean>
+ 	
+	<!-- <mvc:interceptors>
+		 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求  
+		 <mvc:interceptor>
+		 	<mvc:mapping path="/*"/>
+		 	<mvc:exclude-mapping path="/toError.wx"/>
+		 	<mvc:exclude-mapping path="/toBind.wx"/>
+		 	<mvc:exclude-mapping path="/privilege.wx"/>
+		 	<mvc:exclude-mapping path="/getvalidcode.wx"/>
+			<bean class="com.liantong.web.interceptor.WxInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/auth/**" />
+			 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的  
+			<bean class="com.liantong.web.interceptor.OAuthInterceptor" />
+		</mvc:interceptor>
+		
+	</mvc:interceptors> -->
+      
+    <!-- 3：对静态资源文件的访问  方案一 （二选一） -->
+    <!-- 静态资源默认的servlet配置
+    	1.加入了对静态资源的处理：js，gif，png
+    	2.允许使用“/”作整体映射
+     -->  
+    <mvc:default-servlet-handler/>
+      
+    <!-- 对静态资源文件的访问  方案二 （二选一）-->  
+    <mvc:resources mapping="/images/**" location="/images/" cache-period="31556926"/>  
+    <mvc:resources mapping="/js/**" location="/js/" cache-period="31556926"/>  
+    <mvc:resources mapping="/css/**" location="/css/" cache-period="31556926"/> 
+    <mvc:resources mapping="/font/**" location="/css/" cache-period="31556926"/> 
+  	
+  	<!-- <bean class="com.evenliu.web.servlet.Initialization"/> -->
+</beans>   

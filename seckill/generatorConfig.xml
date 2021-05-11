@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+<classPathEntry location="E:\Workplace\framwork\WebRoot\WEB-INF\lib\mysql-connector-java-5.1.5.jar" /> 
+  <context id="context1" >
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/seckill" userId="root" password="root" />
+    <javaModelGenerator targetPackage="com.evenliu.db.entity" targetProject="seckill" />
+    <sqlMapGenerator targetPackage="com.evenliu.db.mapperxml" targetProject="seckill" />    
+    <javaClientGenerator targetPackage="com.evenliu.db.dao" targetProject="seckill" type="XMLMAPPER" />
+  
+  <!-- <table schema="seckill" tableName="seckill"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false" ></table> -->
+  <table schema="seckill" tableName="danmu"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+  
+    
+ </context>
+</generatorConfiguration>
